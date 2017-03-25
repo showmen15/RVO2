@@ -55,6 +55,7 @@ namespace WindowsFormsApplication3
 3; -1.57; 0; 3; 4; 0; 3; 1");
 
 
+
             //CAPO Circle
             //configurAgent(@"0;2.615; 0;3;1; 0;3;5
             //1;2.092; 0;2;1.27; 0;4;4.73
