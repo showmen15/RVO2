@@ -55,7 +55,7 @@ namespace RVO3
         internal float timeHorizonObst_ = 0.0f;
 
         private Vector2 newVelocity_;
-        internal Vector2 getNewVelocity;
+        internal Vector2 getNewVelocity; //roznica
 
         internal float timeStep_;
 

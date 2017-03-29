@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -41,6 +42,10 @@ namespace WindowsFormsApplication3
         {
             killAll();
 
+            string sFileName = "D:\\Desktop\\Config.csv";
+            configurAgent(File.ReadAllText(sFileName));
+
+
             //Block
             //initRobot();
 
@@ -50,9 +55,9 @@ namespace WindowsFormsApplication3
             //configurAgent(@"0;2.615; 0;3;1; 0;3;5
             //1;2.092; 0;2;1.27; 0;4;4.73
             //2;1.57; 0;1.27;2; 0;4.73;4");
-            configurAgent(@"1;-1.57; 0;2.5;4; 0;2.5;1
-2; -1.57; 0; 2; 4; 0; 2; 1
-3; -1.57; 0; 3; 4; 0; 3; 1");
+            //            configurAgent(@"1;-1.57; 0;2.5;4; 0;2.5;1
+            //2; -1.57; 0; 2; 4; 0; 2; 1
+            //3; -1.57; 0; 3; 4; 0; 3; 1");
 
 
 
@@ -174,7 +179,7 @@ namespace WindowsFormsApplication3
 
         private void initThred()
         {
-            int RobotID = 9;
+            int RobotID = 0;
 
             for (int i = 0; i < robotStartPos.Count; i++)
             {
@@ -217,9 +222,16 @@ namespace WindowsFormsApplication3
         private void run(SimRVO3 sim)
         {
             int robotID = sim.RobotID;
+            int loop = 0;
 
             while (working)
             {
+                if(loop > 13)
+                {
+                    int llll = 00;
+                }
+
+
                 State currentState = AllRobotStates[robotID];
                 List<State> AllState = new List<State>();
 
@@ -228,16 +240,17 @@ namespace WindowsFormsApplication3
 
                 Vector2 currentVelocity = sim.compute(AllState, currentState.location);
 
-                Console.WriteLine(string.Format("ID: {0} X: {1} Y: {2}", robotID, currentVelocity.x(), currentVelocity.y()));
-
                 currentState.location += currentVelocity * sim.timeStep;
                 currentState.velocity = currentVelocity;
 
-                if(sim.IsCollide())
+
+                Console.WriteLine(string.Format("{3}&{0}&{1}&{2}&{4}&{5}&", robotID, currentVelocity.x(), currentVelocity.y(), loop, currentState.location.x(), currentState.location.y()));
+
+                if (sim.IsCollide())
                 {
                     int i = 4343;
                 }
-
+                loop++;
                  System.Threading.Thread.Sleep(50);
                // System.Threading.Thread.Sleep(500);
             }
@@ -439,6 +452,11 @@ namespace WindowsFormsApplication3
             //return addObstacle(new List<Vector2>() { new Vector2(x_max, y_min), new Vector2(x_max, y_max), new Vector2(x_min, y_max), new Vector2(x_min, y_min) });
 
             return new List<Vector2>() { new Vector2(x_min, y_max), new Vector2(x_min, y_min), new Vector2(x_max, y_min), new Vector2(x_max, y_max) };
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            killAll();
         }
     }
 }

@@ -84,7 +84,10 @@ namespace RVO3
         {
             CurrentAgent.position_ = currentPosition;
 
+           // CurrentAgent.velocity_ = new Vector2(0, 0); //bug bug bug gdy jest zerowane powoduje problem roboty powinny uwzgledniac velocity z poptrzedniego wyliczenia
+
             IList<Agent> agents = getAgents(sate);
+            agents.Add(CurrentAgent);
 
             agents_ = agents;
             kdTree_ = new KdTree();
@@ -150,7 +153,12 @@ namespace RVO3
             List<Agent> temp = new List<Agent>();//
 
             foreach (var item in sate)
+            {
+                if (item.robotId == RobotID)
+                    continue;
+                else
                 temp.Add(createAgent(item));//
+            }
 
             return temp;//
         }
